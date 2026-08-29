@@ -1,6 +1,45 @@
 from datetime import date, datetime
 
 from nicegui import app, ui
+from nicegui.events import GenericEventArguments
+
+
+def on_page_unload(_: GenericEventArguments):
+    app.storage.user.clear()
+
+
+def add_unload_handler():
+    """Calls `on_pagehide` when the page is hidden."""
+    ui.add_body_html("""
+    <script>
+    (function() {
+        window.addEventListener('unload', (event) => {
+            emitEvent('page_unload', event);
+        });
+    })();
+    </script>
+    """)
+    ui.on("page_unload", on_page_unload)
+
+
+def add_inactivity_timeout(timeout_seconds: float, on_timeout):
+    """Redirects/logs out after `timeout_seconds` of no user activity."""
+    ui.add_body_html(f"""
+    <script>
+    (function() {{
+        let timer;
+        function reset() {{
+            clearTimeout(timer);
+            timer = setTimeout(() => emitEvent('inactivity_timeout'), {timeout_seconds * 1000});
+        }}
+        ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt =>
+            document.addEventListener(evt, reset, true));
+        reset();
+    }})();
+    </script>
+    """)
+    ui.on("inactivity_timeout", on_timeout)
+    app.storage.user.update(last_activity_time=datetime.now().isoformat())
 
 
 def logout() -> None:
