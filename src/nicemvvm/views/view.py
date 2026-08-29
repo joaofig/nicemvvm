@@ -1,7 +1,7 @@
 from collections.abc import Awaitable, Callable
 
 from nicemvvm.tools.messenger import get_messenger
-from src.viewmodels.view_model import ViewModel
+from nicemvvm.viewmodels.view_model import ViewModel
 
 
 class View:
