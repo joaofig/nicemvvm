@@ -1,7 +1,7 @@
 [project]
 name = "nicemvvm"
 version = "0.1.0"
-description = "Add your description here"
+description = "A lightweight, modern Model-View-ViewModel (MVVM) framework designed for NiceGUI."
 readme = "README.md"
 authors = [
     { name = "joaofig", email = "joao.figueira@gmail.com" }
