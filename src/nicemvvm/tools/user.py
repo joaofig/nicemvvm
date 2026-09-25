@@ -52,7 +52,9 @@ def record_user_activity() -> None:
 
 
 def get_user_name() -> str:
-    return app.storage.user.get("username", "user")
+    if app.is_started:
+        return app.storage.user.get("username", "user")
+    return "user"
 
 
 def get_user_role() -> str:
