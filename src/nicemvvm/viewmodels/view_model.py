@@ -32,7 +32,7 @@ class ViewModel(ABC):
             for msg in messages:
                 messenger.subscribe(msg, handler)
 
-    async def call(self, msg: str, **kwargs):
+    async def call(self, msg: str, **kwargs) -> Any:
         """Use this method to call methods in the ViewModel. It will call the _on_call method and return the result."""
         result = self._on_call(msg, **kwargs)
         if result is not None and asyncio.iscoroutine(result):
