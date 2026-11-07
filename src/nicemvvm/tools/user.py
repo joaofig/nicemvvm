@@ -57,7 +57,6 @@ def get_user_name() -> str:
     return "user"
 
 
-def get_user_role() -> str:
     return app.storage.user.get("user_role", "Reader")
 
 
